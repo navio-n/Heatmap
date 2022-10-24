@@ -1,8 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.38">
+	<PropertyGroup>
+		<LangVersion>10.0</LangVersion>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <IsPackable>true</IsPackable>
+	<TargetFrameworks>netstandard2.0;xamarinios10;MonoAndroid11.0;uap10.0.18362</TargetFrameworks>
+	<IsPackable>true</IsPackable>
     <PackageId>CreoOne.$(AssemblyName)</PackageId>
     <Authors>CreoOne</Authors>
     <PackageProjectUrl></PackageProjectUrl>
@@ -21,7 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="system.numerics.vectors" Version="4.5.0" />
+	  <PackageReference Include="Uno.UI" Version="4.5.14" />
+	  <PackageReference Include="Uno.Core" Version="4.0.1" />
   </ItemGroup>
 
 </Project>

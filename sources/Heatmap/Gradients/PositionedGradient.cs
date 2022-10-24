@@ -29,8 +29,8 @@ namespace Heatmap.Gradients
                     return RgbColor.Lerp(previousPositionedColor.Color, currentPositionedColor.Color, offset);
                 }
             }
-
-            return PositionedColors[^1].Color;
+            //return PositionedColors[^1].Color;
+            return PositionedColors[PositionedColors.Length-1].Color;
         }
 
         public override string ToString() => "Positioned";

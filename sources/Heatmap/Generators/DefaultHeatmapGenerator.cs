@@ -17,7 +17,12 @@ namespace Heatmap.Generators
 
         public async Task SampleAsync(ISampler sampler, Viewport viewport, Resolution resolution)
         {
-            PositionedSamples.Clear();
+            //PositionedSamples.Clear();
+
+            while (!PositionedSamples.IsEmpty)
+            {
+                PositionedSamples.TryTake(out PositionedSample _);
+            }
 
             var sampleSize = new Vector2(1f) / resolution;
 
