@@ -20,6 +20,9 @@ namespace Heatmap.SkiaSharp.Receivers
         {
             using SKBitmap bitmap = new(resolution.Width, resolution.Height, SKColorType.Rgba8888, SKAlphaType.Unpremul);
 
+            //byte[,,] buffer = new byte[resolution.Height, resolution.Width, 4];
+            uint[,] buffer = new uint[resolution.Height, resolution.Width];
+
             foreach (var fragment in Fragments)
             {
                 var basePosition = fragment.Position * resolution;
@@ -35,8 +38,32 @@ namespace Heatmap.SkiaSharp.Receivers
                         var shiftedY = (int)shifted.Y;
 
                         if (shiftedX >= 0 && shiftedY >= 0 && shiftedX < resolution.Width && shiftedY < resolution.Height)
-                            bitmap.SetPixel(shiftedX, shiftedY, ConvertColor(fragment.Color));
+                        {
+                            var color = ConvertColor(fragment.Color);
+
+                            buffer[shiftedY, shiftedX] = (uint)ConvertColor(fragment.Color);
+
+                            //buffer[shiftedY, shiftedX, 0] = color.Red;
+                            //buffer[shiftedY, shiftedX, 1] = color.Green;
+                            //buffer[shiftedY, shiftedX, 2] = color.Blue;
+                            //buffer[shiftedY, shiftedX, 3] = 0xFF;
+                            //bitmap.SetPixel(shiftedX, shiftedY, color);
+                        }
+                        else
+                        {
+
+                        }
+
                     }
+            }
+
+            unsafe
+            {
+                //fixed (byte* ptr = buffer)
+                fixed (uint* ptr = buffer)
+                {
+                    bitmap.SetPixels((IntPtr)ptr);
+                }
             }
 
             var data = bitmap.Encode(SKEncodedImageFormat.Png, 100);
